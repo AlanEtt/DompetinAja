@@ -101,11 +101,6 @@ Pull request dan issue dipersilakan. Mohon sertakan deskripsi yang jelas, langka
 
 ---
 
-## 🛡️ Lisensi
-Hak cipta © 2025 DompetinAja Team. Untuk penggunaan akademik/penelitian dipersilakan dengan atribusi. Ketentuan lisensi final akan ditambahkan menjelang rilis.
-
----
-
 ## 📸 Cuplikan Layar (Placeholder)
 Tambahkan di kemudian hari:
 - Beranda / Dashboard
