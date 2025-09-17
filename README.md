@@ -103,7 +103,7 @@ Pull request dan issue dipersilakan. Mohon sertakan deskripsi yang jelas, langka
 
 ## 📸 Cuplikan Layar (Placeholder)
 Tambahkan di kemudian hari:
-- Beranda / Dashboard
+- Beranda / Dashboard![1758128866842](image/README/1758128866842.png)![1758128868120](image/README/1758128868120.png)![1758128871969](image/README/1758128871969.png)![1758128878581](image/README/1758128878581.png)![1758128880299](image/README/1758128880299.png)![1758128884780](image/README/1758128884780.png)![1758128885881](image/README/1758128885881.png)![1758128891662](image/README/1758128891662.png)![1758128891877](image/README/1758128891877.png)
 - Daftar Transaksi
 - Form Tambah Transaksi
 - Halaman Budgeting
