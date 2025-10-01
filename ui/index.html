@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DompetinAja - Kelola Keuangan Pribadi</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Mobile App Container -->
+    <div class="mobile-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="user-info">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-details">
+                        <h1>Selamat Datang!</h1>
+                        <p>Kelola keuangan dengan mudah</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="notificationBtn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="icon-btn" id="settingsBtn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section class="dashboard-section" id="dashboardSection">
+                <!-- Balance Cards -->
+                <div class="balance-cards">
+                    <div class="balance-card primary">
+                        <div class="card-header">
+                            <h3>Total Saldo</h3>
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="balance-amount">
+                            <span class="currency">Rp</span>
+                            <span class="amount" id="totalBalance">2.450.000</span>
+                        </div>
+                        <div class="balance-change positive">
+                            <i class="fas fa-arrow-up"></i>
+                            <span>+12.5% dari bulan lalu</span>
+                        </div>
+                    </div>
+                    
+                    <div class="balance-card secondary">
+                        <div class="card-header">
+                            <h3>Pemasukan Bulan Ini</h3>
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                        <div class="balance-amount">
+                            <span class="currency">Rp</span>
+                            <span class="amount" id="monthlyIncome">3.200.000</span>
+                        </div>
+                    </div>
+                    
+                    <div class="balance-card secondary">
+                        <div class="card-header">
+                            <h3>Pengeluaran Bulan Ini</h3>
+                            <i class="fas fa-arrow-down"></i>
+                        </div>
+                        <div class="balance-amount">
+                            <span class="currency">Rp</span>
+                            <span class="amount" id="monthlyExpense">750.000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <h3>Aksi Cepat</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" id="addIncomeBtn">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Tambah Pemasukan</span>
+                        </button>
+                        <button class="action-btn" id="addExpenseBtn">
+                            <i class="fas fa-minus-circle"></i>
+                            <span>Tambah Pengeluaran</span>
+                        </button>
+                        <button class="action-btn" id="transferBtn">
+                            <i class="fas fa-exchange-alt"></i>
+                            <span>Transfer</span>
+                        </button>
+                        <button class="action-btn" id="budgetBtn">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Budget</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Pengeluaran per Kategori</h3>
+                            <select class="chart-filter" id="expenseChartFilter">
+                                <option value="week">Minggu ini</option>
+                                <option value="month" selected>Bulan ini</option>
+                                <option value="year">Tahun ini</option>
+                            </select>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="expenseChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3>Trend Pemasukan vs Pengeluaran</h3>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="trendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="recent-transactions">
+                    <div class="section-header">
+                        <h3>Transaksi Terbaru</h3>
+                        <button class="view-all-btn" id="viewAllTransactionsBtn">Lihat Semua</button>
+                    </div>
+                    <div class="transaction-list" id="recentTransactionsList">
+                        <!-- Transactions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Transactions Section -->
+            <section class="transactions-section hidden" id="transactionsSection">
+                <div class="section-header">
+                    <button class="back-btn" id="backToDashboardBtn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Transaksi</h2>
+                    <button class="icon-btn" id="filterBtn">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-filter="all">Semua</button>
+                        <button class="filter-tab" data-filter="income">Pemasukan</button>
+                        <button class="filter-tab" data-filter="expense">Pengeluaran</button>
+                    </div>
+                    <div class="date-filter">
+                        <input type="date" id="startDate" class="date-input">
+                        <span>sampai</span>
+                        <input type="date" id="endDate" class="date-input">
+                    </div>
+                </div>
+
+                <div class="transaction-list" id="allTransactionsList">
+                    <!-- All transactions will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Wallets Section -->
+            <section class="wallets-section hidden" id="walletsSection">
+                <div class="section-header">
+                    <button class="back-btn" id="backToDashboardFromWalletsBtn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Dompet Saya</h2>
+                    <button class="icon-btn" id="addWalletBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="wallets-grid" id="walletsGrid">
+                    <!-- Wallets will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Budget Section -->
+            <section class="budget-section hidden" id="budgetSection">
+                <div class="section-header">
+                    <button class="back-btn" id="backToDashboardFromBudgetBtn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Budget Bulanan</h2>
+                    <button class="icon-btn" id="addBudgetBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="budget-list" id="budgetList">
+                    <!-- Budget items will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Debts Section -->
+            <section class="debts-section hidden" id="debtsSection">
+                <div class="section-header">
+                    <button class="back-btn" id="backToDashboardFromDebtsBtn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Utang & Piutang</h2>
+                    <button class="icon-btn" id="addDebtBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="debt-tabs">
+                    <button class="debt-tab active" data-type="debt">Utang Saya</button>
+                    <button class="debt-tab" data-type="credit">Piutang Saya</button>
+                </div>
+
+                <div class="debt-list" id="debtList">
+                    <!-- Debt items will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Recurring Section -->
+            <section class="recurring-section hidden" id="recurringSection">
+                <div class="section-header">
+                    <button class="back-btn" id="backToDashboardFromRecurringBtn">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h2>Transaksi Berulang</h2>
+                    <button class="icon-btn" id="addRecurringBtn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+
+                <div class="recurring-list" id="recurringList">
+                    <!-- Recurring transactions will be populated by JavaScript -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-section="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Beranda</span>
+            </button>
+            <button class="nav-item" data-section="transactions">
+                <i class="fas fa-list"></i>
+                <span>Transaksi</span>
+            </button>
+            <button class="nav-item" data-section="wallets">
+                <i class="fas fa-wallet"></i>
+                <span>Dompet</span>
+            </button>
+            <button class="nav-item" data-section="budget">
+                <i class="fas fa-chart-pie"></i>
+                <span>Budget</span>
+            </button>
+            <button class="nav-item" data-section="debts">
+                <i class="fas fa-hand-holding-usd"></i>
+                <span>Utang</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Transaction Modal -->
+    <div class="modal" id="addTransactionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Tambah Transaksi</h3>
+                <button class="close-btn" id="closeModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="transactionForm">
+                    <div class="form-group">
+                        <label for="transactionType">Jenis Transaksi</label>
+                        <select id="transactionType" required>
+                            <option value="income">Pemasukan</option>
+                            <option value="expense">Pengeluaran</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transactionAmount">Jumlah</label>
+                        <input type="number" id="transactionAmount" placeholder="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transactionWallet">Dompet</label>
+                        <select id="transactionWallet" required>
+                            <option value="">Pilih Dompet</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transactionCategory">Kategori</label>
+                        <select id="transactionCategory" required>
+                            <option value="">Pilih Kategori</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transactionDate">Tanggal</label>
+                        <input type="date" id="transactionDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transactionDescription">Deskripsi (Opsional)</label>
+                        <textarea id="transactionDescription" placeholder="Catatan tambahan..."></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelTransactionBtn">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Wallet Modal -->
+    <div class="modal" id="addWalletModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Tambah Dompet</h3>
+                <button class="close-btn" id="closeWalletModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="walletForm">
+                    <div class="form-group">
+                        <label for="walletName">Nama Dompet</label>
+                        <input type="text" id="walletName" placeholder="Contoh: Bank BCA" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="walletBalance">Saldo Awal</label>
+                        <input type="number" id="walletBalance" placeholder="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="walletIcon">Ikon</label>
+                        <div class="icon-picker">
+                            <button type="button" class="icon-option" data-icon="fas fa-university">
+                                <i class="fas fa-university"></i>
+                            </button>
+                            <button type="button" class="icon-option" data-icon="fas fa-credit-card">
+                                <i class="fas fa-credit-card"></i>
+                            </button>
+                            <button type="button" class="icon-option" data-icon="fas fa-money-bill-wave">
+                                <i class="fas fa-money-bill-wave"></i>
+                            </button>
+                            <button type="button" class="icon-option" data-icon="fas fa-piggy-bank">
+                                <i class="fas fa-piggy-bank"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelWalletBtn">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
