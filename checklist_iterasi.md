@@ -4,7 +4,7 @@ Rencana pengembangan ini dibagi menjadi 7 sprint mingguan, dengan fokus yang jel
 #### Sprint 1: Fondasi Proyek & Data Inti (Minggu ke-1)
 Tujuan: Menyiapkan seluruh fondasi teknis dan struktur database untuk fitur inti.
 
-- [ ] Inisialisasi proyek Flutter baru.
+- [✔️] Inisialisasi proyek Flutter baru.
 - [ ] Tambahkan semua dependensi di pubspec.yaml (Riverpod Generator, Freezed, Drift, Go_Router, dll.).
 - [ ] Buat struktur direktori proyek berdasarkan Clean Architecture (features, core, data, domain, presentation).
 - [ ] Konfigurasi build_runner untuk code generation.
